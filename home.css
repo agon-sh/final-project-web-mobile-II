@@ -149,7 +149,7 @@ header .side_buttons a:hover {
     justify-content: center; 
     align-items: center;
     gap: 20px 20px; 
-    padding: 20px; 
+    padding: 20px;
 }
 
 .property {
@@ -192,4 +192,48 @@ header .side_buttons a:hover {
 .property_text p {
     margin: 4px 0;
     font-size: 16px;
+}
+
+/* why choose us section */
+
+.why_choose_us {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #f1f3f5;
+}
+
+.why_choose_us h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: #1D2731;
+}
+
+.reasons_grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.reason {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.reason h3 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #1D2731;
+}
+
+.reason p {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: #3C4A57;
 }
