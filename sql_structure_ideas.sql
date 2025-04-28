@@ -10,7 +10,8 @@ create table property (
   cost  int,
   square_feet  int,
   bedrooms  int,
-  bathrooms  int
+  bathrooms  int,
+  image_url  varchar(255),
 );
 
 create table user (
