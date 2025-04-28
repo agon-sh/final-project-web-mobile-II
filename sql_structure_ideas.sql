@@ -11,7 +11,7 @@ create table property (
   square_feet  int,
   bedrooms  int,
   bathrooms  int,
-  image_url  varchar(255),
+  image_url  text, -- text data type is for rlly long string which can happen with image urls which can exceed 255 char
 );
 
 create table user (
