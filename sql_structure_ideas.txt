@@ -1,0 +1,4 @@
+SQL Structure IDEAS:
+
+Data structure for apartments:
+
