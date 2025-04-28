@@ -1,6 +1,5 @@
-SQL Structure IDEAS:
-
-Data structure for property:
+--SQL Structure IDEAS:
+-- Data structure for property:
 
 create table property (
   PID  int auto_increment Primary key,
