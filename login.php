@@ -4,84 +4,114 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Real Estate Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display&display=swap" rel="stylesheet">
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(rgba(0, 0, 50, 0.7), rgba(0, 0, 50, 0.7)), 
-                    url('https://images.unsplash.com/photo-1570129477492-45c003edd2be') no-repeat center center/cover;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+/* Body */
+body {
+    font-family: "Poppins", sans-serif;
+    background: url('1.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .container {
-        background-color: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-        width: 350px;
-    }
+/* Container */
+.container {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    width: 420px;
+    text-align: center;
+}
 
-    .container h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #003366;
-    }
+.container h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #1D2731;
+    font-family: "Playfair Display", serif;
+}
 
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 6px;
-        color: #333;
-    }
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+}
 
-    input[type="text"], input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-    }
+label {
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
 
-    input[type="checkbox"] {
-        margin-right: 8px;
-    }
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
 
-    .remember {
-        font-size: 0.9em;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        color: #333;
-    }
+input[type="checkbox"] {
+    margin-right: 8px;
+}
 
-    input[type="submit"] {
-        width: 100%;
-        padding: 12px;
-        background-color: #0066cc;
-        border: none;
-        color: white;
-        font-size: 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+.remember {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    color: #333;
+}
 
-    input[type="submit"]:hover {
-        background-color: #004d99;
-    }
+/* Buttons */
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color:rgb(10, 3, 58);
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-    .error {
-        color: red;
-        text-align: center;
-        margin-bottom: 15px;
-    }
+input[type="submit"]:hover {
+    background-color: #004d99;
+}
+
+.signup-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFFFFF;
+    border: none;
+    color: grey;
+    text-decoration:underline;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
 </style>
 </head>
 <body>
+    <!--Made by: Dion Hajrullahu. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
 <?php
 session_start();
 
@@ -95,12 +125,7 @@ $error = "";
 
 if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
     $username = $_COOKIE['username'];
-    $password = $_COOKIE['password'];  
-}  
-
-if (isset($_POST['remember_me'])) {
-    setcookie('username', $username, time() + (86400 * 30), "/");
-    setcookie('password', $password, time() + (86400 * 30), "/");
+    $password = $_COOKIE['password'];
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -118,6 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($password === $dbPassword) {
             $_SESSION["username"] = $username;
+            if (isset($_POST['remember_me'])) {
+                setcookie('username', $username, time() + (86400 * 30));
+                setcookie('password', $password, time() + (86400 * 30));
+            }
             header("Location: profile.php");
             exit();
         } else {
@@ -149,10 +178,13 @@ $conn->close();
         </div>
 
         <input type="submit" value="Login">
-        <br>
-    <p>Don't have an account? <a href="SignUp.php"><button type="button">Sign Up</button></a></p>
-
     </form>
+
+    <div class="signup-link">
+        <p>Don't have an account?</p>
+        <a href="SignUp.php"><button class="signup-button">Sign Up</button></a>
+    </div>
 </div>
+
 </body>
 </html>
