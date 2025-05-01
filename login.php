@@ -115,7 +115,7 @@ input[type="submit"]:hover {
 <?php
 session_start();
 
-$conn = new mysqli("localhost", "webmobile", "RITK2025", "webmobile");
+$conn = new mysqli("localhost", "root", "", "empire_living");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT password FROM user WHERE uername = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
@@ -146,8 +146,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST['remember_me'])) {
                 setcookie('username', $username, time() + (86400 * 30));
                 setcookie('password', $password, time() + (86400 * 30));
+                $_SESSION['username'] = $user['username'];
             }
-            header("Location: profile.php");
+            header("Location: sell.php");
             exit();
         } else {
             $error = "Incorrect password.";

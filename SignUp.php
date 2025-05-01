@@ -87,14 +87,14 @@
 <?php
 session_start();
 
-$conn = new mysqli("localhost", "webmobile", "RITK2025", "webmobile");
+$conn = new mysqli("localhost", 'root' ,"", "empire_living");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
     // Check if username already exists
-    $stmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT uername FROM user WHERE uername = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
@@ -104,11 +104,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt->close();
         // Insert new user
-        $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO user (uername, password) VALUES (?, ?)");
         $stmt->bind_param("ss", $username, $password);
 
         if ($stmt->execute()) {
-            header("Location: buy.php"); // or wherever you want to redirect after successful signup
+            header("Location: sell.php"); // or wherever you want to redirect after successful signup
             exit();
         } else {
             $error = "Could not create account. Please try again.";
