@@ -1,9 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
-}
 
 $conn = mysqli_connect("localhost", "root", "", "empire_living");
 $result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathrooms, image_url FROM property");
