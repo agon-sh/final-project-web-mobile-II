@@ -18,7 +18,8 @@
         <a href="home.html">Home</a>
         <a href="#">Rent</a>
         <a href="sell.php">Sell</a>
-        <a href="signup.php">Register / Sign In</a>
+      
+        <a href="logout.php">Logout</a>
     </div>
 </header> 
  
@@ -38,7 +39,7 @@
     }
 
 
-    .container h3 {
+    .container h2 {
         text-align: center;
         margin-bottom: 20px;
         color: #000;
@@ -88,9 +89,9 @@
         margin-bottom: 15px;
     }
 
-    form{
+    .container{
         margin-top:200px;
-        background-color:beige;
+        background-color:#F3F0F1;
         padding:50px;
         border-radius:10px;
         height:550px;
@@ -190,21 +191,22 @@ if (isset ($_POST['title'])&&isset ($_POST['price'])&&isset ($_POST['sqft']) &&i
     $sql = "INSERT INTO property(title, cost, square_feet, bedrooms, bathrooms, image_url) VALUE ('$title','$price','$sqft','$bed','$bath','$pic')";
     mysqli_query($link, $sql);
     mysqli_close($link);
-    echo "Your input was submitted!";
     header("Location: browse.php");
 }
 ?>
 
 
 <form action="sell.php" method="post" enctype="multipart/form-data" class='container'>
-    <h3>Your property</h3>
-<input type="text" name="title" placeholder="Your propert's title"><br>
-<input type="number" name="price" placeholder= "The price of your property"><br>
-<input type="number" name="sqft" placeholder="Size of your property(in sq feet)"><br>
-<input type="number" name="bedrooms" placeholder="Numbers of bedrooms"><br>
-<input type="number" name="bathrooms" placeholder="Numbers of bathrooms"><br>
-<input type="file" name="pic"><br>
+    <h2>Your property</h2>
+<input type="text" name="title" placeholder="Your propert's title" required><br>
+<input type="number" name="price" placeholder= "The price of your property" required><br>
+<input type="number" name="sqft" placeholder="Size of your property(in sq feet)" required><br>
+<input type="number" name="bedrooms" placeholder="Numbers of bedrooms" required><br>
+<input type="number" name="bathrooms" placeholder="Numbers of bathrooms" required><br>
+<input type="file" name="pic" required  ><br>
 <input type="submit" class="submit">
-<a href="logout.php">Logout</a>
+
 </form>
 </body>
+
+    <!--Made by: Erin Kupina. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
