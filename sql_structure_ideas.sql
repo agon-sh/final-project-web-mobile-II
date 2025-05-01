@@ -19,3 +19,5 @@ create table user (
   email    varchar(100),
   password varchar(100)
 );
+
+ALTER TABLE `property` CHANGE `image_url` `image_url` LONGBLOB NULL DEFAULT NULL;

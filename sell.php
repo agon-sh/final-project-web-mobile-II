@@ -1,3 +1,177 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="images/EmpireLivingLogo-Transparent.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<title>Empire Estate Sign Up</title>
+
+<header id="home">
+    <div class="logo">
+        <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
+        EMPIRE LIVING
+    </div>
+    <div class="side_buttons">
+        <a href="home.html">Home</a>
+        <a href="#">Rent</a>
+        <a href="sell.php">Sell</a>
+        <a href="signup.php">Register / Sign In</a>
+    </div>
+</header> 
+ 
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        height: 100vh;
+        display: flex;
+        background-image:url('bg_sell.jpg');
+        background-size: cover;         /* scales image to fill screen */
+    background-repeat: no-repeat;   /* prevents tiling */
+    background-position: center;    /* centers the image */
+    background-attachment: fixed; 
+        justify-content: center;
+    }
+
+
+    .container h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #000;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 6px;
+        color: #333;
+    }
+
+    input{
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .buttons a button {
+        width: 100%;
+        padding: 12px;
+        background-color:rgb(10, 3, 58);
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    a button:hover {
+        background-color: #004d99;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    form{
+        margin-top:200px;
+        background-color:beige;
+        padding:50px;
+        border-radius:10px;
+        height:550px;
+    }
+    /* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: white;
+}
+
+/* Header */
+header {
+    color: white;
+    background-color: black;
+    font-size: 24px;
+    position: absolute; 
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    z-index: 10;
+  
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+}
+
+header .logo img {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+}
+
+header .side_buttons {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+header .side_buttons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+header .side_buttons a:hover {
+    background-color: white;
+    color: black;
+}
+.submit:hover{
+    background-color:#0012;
+    cursor:pointer;
+}
+</style>
+</head>
+
 <?php 
 session_start();
 if (!isset($_SESSION['username'])) {
@@ -5,7 +179,32 @@ if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
-
+$link = mysqli_connect("localhost", "root", "", "empire_living");
+if (isset ($_POST['title'])&&isset ($_POST['price'])&&isset ($_POST['sqft']) &&isset ($_POST['bedrooms']) &&isset ($_POST['bathrooms'])&&isset($_FILES["pic"])){
+    $title = $_POST['title'];
+    $price = $_POST['price'];
+    $sqft = $_POST['sqft'];
+    $bed = $_POST['bedrooms'];
+    $bath = $_POST['bathrooms'];
+    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
+    $sql = "INSERT INTO property(title, cost, square_feet, bedrooms, bathrooms, image_url) VALUE ('$title','$price','$sqft','$bed','$bath','$pic')";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
+    echo "Your input was submitted!";
+    header("Location: browse.php");
+}
 ?>
 
+
+<form action="sell.php" method="post" enctype="multipart/form-data" class='container'>
+    <h3>Your property</h3>
+<input type="text" name="title" placeholder="Your propert's title"><br>
+<input type="number" name="price" placeholder= "The price of your property"><br>
+<input type="number" name="sqft" placeholder="Size of your property(in sq feet)"><br>
+<input type="number" name="bedrooms" placeholder="Numbers of bedrooms"><br>
+<input type="number" name="bathrooms" placeholder="Numbers of bathrooms"><br>
+<input type="file" name="pic"><br>
+<input type="submit" class="submit">
 <a href="logout.php">Logout</a>
+</form>
+</body>
