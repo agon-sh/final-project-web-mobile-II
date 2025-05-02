@@ -205,7 +205,7 @@
             </form>
 
             <div class="signup-link">
-                <a href="SignUp.php"><button class="signup-button">Sign Up</button></a>
+                <a href="sign_up.php"><button class="signup-button">Sign Up</button></a>
             </div>
         </div>
     </section>
