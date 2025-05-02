@@ -2,23 +2,42 @@
 -- Data structure for property:
 
 create database empire_living;
-use database empire_living;
+use empire_living;
 
-create table property (
-  PID  int auto_increment Primary key,
-  title varchar(30),
-  cost  int,
-  square_feet  int,
-  bedrooms  int,
-  bathrooms  int,
-  image_url  text, -- text data type is for rlly long string which can happen with image urls which can exceed 255 char
-  sold bool
+CREATE TABLE property (
+  property_id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  cost INT NOT NULL,
+  square_feet INT,
+  bedrooms INT,
+  bathrooms INT,
+  image LONGBLOB,
+  location varchar(20),
+  sold BOOLEAN DEFAULT FALSE,
+  description TEXT
 );
 
 create table user (
-  uername  varchar(50) Primary key,
-  email    varchar(100),
-  password varchar(100)
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(20) NOT NULL UNIQUE,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL
 );
 
-ALTER TABLE `property` CHANGE `image_url` `image_url` LONGBLOB NULL DEFAULT NULL;
+CREATE TABLE agent (
+  agent_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL
+);
+
+create table appointment (
+  appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  property_id INT NOT NULL,
+  agent_id INT NOT NULL,
+  appointment_date DATE NOT NULL,
+  appointment_time TIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(user_id),
+  FOREIGN KEY (agent_id) REFERENCES agent(agent_id),
+  FOREIGN KEY (property_id) REFERENCES property (property_id)
+);
