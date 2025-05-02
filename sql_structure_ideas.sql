@@ -6,13 +6,14 @@ use empire_living;
 
 CREATE TABLE property (
   property_id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(100) NOT NULL,
+  title VARCHAR(30) NOT NULL,
   cost INT NOT NULL,
-  square_feet INT,
-  bedrooms INT,
-  bathrooms INT,
+  square_feet INT NOT NULL,
+  bedrooms INT NOT NULL,
+  bathrooms INT NOT NULL,
   image LONGBLOB,
-  location varchar(20),
+  location varchar(50) NOT NULL, -- this is the short info like neighborhood of where it is for the cards
+  address varchar(255) NOT NULL,
   sold BOOLEAN DEFAULT FALSE,
   description TEXT
 );
