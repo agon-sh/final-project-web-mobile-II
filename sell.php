@@ -140,7 +140,7 @@
 </head>
 
 <form action="sell.php" method="post" enctype="multipart/form-data" class="container">
-    <h2>Sell your Property</h2>
+    <h2>Sell Your Property</h2>
     <input type="text" name="title" placeholder="Your property's title" required><br>
     <input type="number" name="price" placeholder="The price of your property" required><br>
     <input type="number" name="sqft" placeholder="Size of your property (in sq feet)" required><br>
