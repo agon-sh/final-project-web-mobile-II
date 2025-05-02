@@ -27,9 +27,9 @@ create table user (
 
 CREATE TABLE agent (
   agent_id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL,
   first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  email VARCHAR(100) NOT NULL
+  last_name VARCHAR(50) NOT NULL
 );
 
 create table appointment (
@@ -44,4 +44,7 @@ create table appointment (
   FOREIGN KEY (property_id) REFERENCES property (property_id)
 );
 
-INSERT INTO agent VALUES ('John', 'Smith', 'john.smith@gmail.com');
+-- Creating Agents
+INSERT INTO agent (email, first_name, last_name) VALUES ('john.smith@empire-living.com', 'John', 'Smith');
+INSERT INTO agent (email, first_name, last_name) VALUES ('frederick.jefferson@empire-living.com', 'Frederick', 'Jefferson');
+INSERT INTO agent (email, first_name, last_name) VALUES ('annabelle.smalls@empire-living.com', 'Annabelle', 'Smalls');
