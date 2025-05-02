@@ -1,7 +1,7 @@
 <?php
+    session_start();
     $conn = mysqli_connect("localhost", "root", "", "empire_living");
     $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bedrooms, bathrooms, location, image FROM property");
-    include('header.php');
 ?>
 
 <html lang="en">
@@ -38,8 +38,8 @@
 
         /* Intro box thing */
         .browse_intro {
-            margin-top: 60px; /* offset for fixed header */
-            padding: 60px 20px 0px 20px; /* top, right, bottom, left */
+            margin: 0; /* remove unexpected margin */
+            padding: 100px 20px 30px; /* top padding to push below header */
             text-align: center;
             color: #1D2731;
             font-family: "Playfair Display", serif;
@@ -48,11 +48,15 @@
         .browse_intro h1 {
             font-size: 42px;
             margin-bottom: 10px;
+            margin: 0;
+            padding: 0;
         }
 
         .browse_intro p {
             font-size: 18px;
             font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         /* Property Card Grid */
@@ -110,6 +114,9 @@
     </style>
 
 <body>
+    <!-- Header -->
+    <?php include('header.php'); ?>
+
     <!-- Intro Box -->
     <section class="browse_intro">
         <h1>Explore Premium Listings</h1>
