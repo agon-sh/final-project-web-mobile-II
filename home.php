@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,10 +23,18 @@
             EMPIRE LIVING
         </div>
         <div class="side_buttons">
-            <a href="home.html">Home</a>
+            <a href="home.php">Home</a>
             <a href="browse.php">Rent</a>
             <a href="sell.php">Sell</a>
-            <a href="login.php">Register / Sign In</a>
+            <?php
+                if (!isset($_SESSION['username'])) {
+                    // Not logged in
+                    echo '<a href="login.php">Register / Sign In</a>';
+                } else {
+                    // Logged in
+                    echo '<a href="logout.php">Logout</a>';
+                }
+            ?>
         </div>
     </header>
     

@@ -1,6 +1,7 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "empire_living");
-$result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bedrooms, bathrooms, location, image FROM property");
+    $conn = mysqli_connect("localhost", "root", "", "empire_living");
+    $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bedrooms, bathrooms, location, image FROM property");
+    include('header.php');
 ?>
 
 <html lang="en">
@@ -33,60 +34,6 @@ $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bed
             font-weight: 400;
             font-style: normal;
             background-color: white;
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            background-color: black;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 600;
-            color: white;
-            padding: 0 20px;
-        }
-
-        header .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            color: white;
-        }
-
-        header .logo img {
-            height: 40px;
-            width: 40px;
-            margin-right: 10px;
-        }
-
-        header .side_buttons {
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-
-        header .side_buttons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 0 20px;
-            text-decoration: none;
-            color: white;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: pointer;
-        }
-
-        header .side_buttons a:hover {
-            background-color: white;
-            color: black;
         }
 
         /* Intro box thing */
@@ -161,20 +108,6 @@ $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bed
             font-size: 16px;
         }
     </style>
-
-<!-- Header -->
-<header id="home">
-    <div class="logo">
-        <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
-        EMPIRE LIVING
-    </div>
-    <div class="side_buttons">
-        <a href="home.html">Home</a>
-        <a href="browse.php">Rent</a>
-        <a href="sell.php">Sell</a>
-        <a href="login.php">Register / Sign In</a>
-    </div>
-</header>
 
 <body>
     <!-- Intro Box -->

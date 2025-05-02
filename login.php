@@ -5,17 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real Estate Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <style>
         /* Body */
         body {
             font-family: "Poppins", sans-serif;
             background: url('images/bg_signup.jpg') no-repeat center center/cover;
-            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-section {
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: calc(100vh - 60px);
+            /* header height */
+            padding-top: 60px;
+            overflow: hidden;
         }
 
         /* Container */
@@ -117,42 +128,48 @@
 <body>
     <!--Made by: Dion Hajrullahu. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
     <?php
+    if (!isset($_SESSION['username'])) {
+        // User's already logged in, so we log user out
+        session_start();
+        session_destroy();
+    }
+
     session_start();
 
-    $conn = new mysqli("localhost", "root", "", "empire_living");
+    $conn = mysqli_connect("localhost", "root", "", "empire_living");
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
     }
 
     $error = "";
 
+    // Check if cookies exist (remember me)
     if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
         $username = $_COOKIE['username'];
         $password = $_COOKIE['password'];
     }
 
+    // If form was submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        $stmt = $conn->prepare("SELECT password FROM user WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->store_result();
+        $result = mysqli_query($conn, "SELECT password FROM user WHERE username = '$username'");
 
-        if ($stmt->num_rows === 1) {
-            $stmt->bind_result($dbPassword);
-            $stmt->fetch();
+        if (mysqli_num_rows($result) === 1) {
+            $row = mysqli_fetch_assoc($result);
+            $dbPassword = $row['password'];
 
             if ($password === $dbPassword) {
                 $_SESSION["username"] = $username;
+
                 if (isset($_POST['remember_me'])) {
-                    setcookie('username', $username, time() + (86400 * 30));
-                    setcookie('password', $password, time() + (86400 * 30));
-                    $_SESSION['username'] = $user['username'];
+                    setcookie("username", $username, time() + (86400 * 30), "/");
+                    setcookie("password", $password, time() + (86400 * 30), "/");
                 }
-                header("Location: sell.php");
+
+                header("Location: home.php");
                 exit();
             } else {
                 $error = "Incorrect password.";
@@ -161,36 +178,37 @@
             $error = "User not found.";
         }
 
-        $stmt->close();
+        mysqli_close($conn);
     }
 
-    $conn->close();
+    include('header.php');
     ?>
 
-    <div class="container">
-        <h2>Login</h2>
-        <?php if (!empty($error))
-            echo "<div class='error'>$error</div>"; ?>
-        <form method="post" action="">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+    <section class="login-section">
+        <div class="container">
+            <h2>Login</h2>
+            <?php if (!empty($error))
+                echo "<div class='error'>$error</div>"; ?>
+            <form method="post" action="">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
 
-            <div class="remember">
-                <input type="checkbox" name="remember_me" id="remember_me">
-                <label for="remember_me">Remember Me</label>
+                <div class="remember">
+                    <input type="checkbox" name="remember_me" id="remember_me">
+                    <label for="remember_me">Remember Me</label>
+                </div>
+
+                <input type="submit" value="Login">
+            </form>
+
+            <div class="signup-link">
+                <a href="SignUp.php"><button class="signup-button">Sign Up</button></a>
             </div>
-
-            <input type="submit" value="Login">
-        </form>
-
-        <div class="signup-link">
-            <a href="SignUp.php"><button class="signup-button">Sign Up</button></a>
         </div>
-    </div>
-
+    </section>
 </body>
 
 </html>

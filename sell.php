@@ -24,6 +24,8 @@
         mysqli_close($link);
         header("Location: browse.php");
     }
+
+    include('header.php');
 ?>
 
 <html lang="en">
@@ -130,79 +132,12 @@
             background-color: white;
         }
 
-        /* Header */
-        header {
-            color: white;
-            background-color: black;
-            font-size: 24px;
-            position: absolute;
-            width: 100%;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 600;
-            z-index: 10;
-
-        }
-
-        header .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            color: white;
-        }
-
-        header .logo img {
-            height: 40px;
-            width: 40px;
-            margin-right: 10px;
-        }
-
-        header .side_buttons {
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-
-        header .side_buttons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 0 20px;
-            text-decoration: none;
-            color: white;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: pointer;
-        }
-
-        header .side_buttons a:hover {
-            background-color: white;
-            color: black;
-        }
-
         .submit:hover {
             background-color: #0012;
             cursor: pointer;
         }
     </style>
 </head>
-
-<header id="home">
-    <div class="logo">
-        <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
-        EMPIRE LIVING
-    </div>
-    <div class="side_buttons">
-        <a href="home.html">Home</a>
-        <a href="#">Rent</a>
-        <a href="sell.php">Sell</a>
-
-        <a href="logout.php">Logout</a>
-    </div>
-</header>
 
 <form action="sell.php" method="post" enctype="multipart/form-data" class="container">
     <h2>Sell your Property</h2>
