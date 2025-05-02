@@ -1,5 +1,32 @@
-<html lang="en">
+<?php
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        // Not logged in
+        header("Location: login.php");
+        exit();
+    }
 
+    $link = mysqli_connect("localhost", "root", "", "empire_living");
+
+    if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) && isset($_POST['bedrooms']) && isset($_POST['bathrooms']) && isset($_POST['location']) && isset($_POST['description']) && isset($_FILES["pic"])) {
+        $title = $_POST['title'];
+        $price = $_POST['price'];
+        $sqft = $_POST['sqft'];
+        $bed = $_POST['bedrooms'];
+        $bath = $_POST['bathrooms'];
+        $location = $_POST['location'];
+        $description = $_POST['description'];
+        $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
+
+        $sql = "INSERT INTO property (title, cost, square_feet, bedrooms, bathrooms, image, location, description) VALUES ('$title','$price','$sqft','$bed','$bath','$pic','$location','$description')";
+
+        mysqli_query($link, $sql);
+        mysqli_close($link);
+        header("Location: browse.php");
+    }
+?>
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +38,6 @@
         rel="stylesheet">
     <title>Empire Estate Sign Up</title>
 
-    <header id="home">
-        <div class="logo">
-            <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
-            EMPIRE LIVING
-        </div>
-        <div class="side_buttons">
-            <a href="home.html">Home</a>
-            <a href="#">Rent</a>
-            <a href="sell.php">Sell</a>
-
-            <a href="logout.php">Logout</a>
-        </div>
-    </header>
-
     <style>
         body {
             margin: 0;
@@ -32,7 +45,7 @@
             font-family: 'Segoe UI', sans-serif;
             height: 100vh;
             display: flex;
-            background-image: url('bg_sell.jpg');
+            background-image: url('images/bg_sell.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -96,7 +109,7 @@
             background-color: #F3F0F1;
             padding: 50px;
             border-radius: 10px;
-            height: 550px;
+            height: 675px;
         }
 
         /* Reset */
@@ -177,51 +190,33 @@
     </style>
 </head>
 
-<?php
-session_start();
+<header id="home">
+    <div class="logo">
+        <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
+        EMPIRE LIVING
+    </div>
+    <div class="side_buttons">
+        <a href="home.html">Home</a>
+        <a href="#">Rent</a>
+        <a href="sell.php">Sell</a>
 
-if (!isset($_SESSION['username'])) {
-    // Not logged in
-    header("Location: login.php");
-    exit();
-}
-
-$link = mysqli_connect("localhost", "root", "", "empire_living");
-
-if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) && isset($_POST['bedrooms']) && isset($_POST['bathrooms']) && isset($_POST['location']) && isset($_POST['description']) && isset($_FILES["pic"])) {
-    $title = $_POST['title'];
-    $price = $_POST['price'];
-    $sqft = $_POST['sqft'];
-    $bed = $_POST['bedrooms'];
-    $bath = $_POST['bathrooms'];
-    $location = $_POST['location'];
-    $description = $_POST['description'];
-    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
-
-    $sql = "INSERT INTO property (title, cost, square_feet, bedrooms, bathrooms, image, location, description) VALUES ('$title','$price','$sqft','$bed','$bath','$pic','$location','$description')";
-
-    mysqli_query($link, $sql);
-    mysqli_close($link);
-    header("Location: browse.php");
-}
-?>
-
+        <a href="logout.php">Logout</a>
+    </div>
+</header>
 
 <form action="sell.php" method="post" enctype="multipart/form-data" class="container">
-    <h2>Your property</h2>
-
+    <h2>Sell your Property</h2>
     <input type="text" name="title" placeholder="Your property's title" required><br>
     <input type="number" name="price" placeholder="The price of your property" required><br>
     <input type="number" name="sqft" placeholder="Size of your property (in sq feet)" required><br>
     <input type="number" name="bedrooms" placeholder="Number of bedrooms" required><br>
     <input type="number" name="bathrooms" placeholder="Number of bathrooms" required><br>
     <input type="text" name="location" placeholder="Location (e.g., SoHo, Upper East Side)" required><br>
-    <textarea name="description" placeholder="Describe your property" rows="4" cols="50"></textarea><br>
+    <textarea name="description" placeholder="Describe your property" rows="4" cols="50" maxlength="255"></textarea><br><br>
     <input type="file" name="pic" required><br>
-    <input type="submit" class="submit">
+    <input type="submit" class="submit"><br>
 </form>
 
-</form>
 </body>
 
 <!--Made by: Erin Kupina. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->

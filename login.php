@@ -11,7 +11,7 @@
         /* Body */
         body {
             font-family: "Poppins", sans-serif;
-            background: url('1.jpg') no-repeat center center/cover;
+            background: url('images/bg_signup.jpg') no-repeat center center/cover;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -187,7 +187,6 @@
         </form>
 
         <div class="signup-link">
-            <p>Don't have an account?</p>
             <a href="SignUp.php"><button class="signup-button">Sign Up</button></a>
         </div>
     </div>
