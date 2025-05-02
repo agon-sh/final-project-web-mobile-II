@@ -12,6 +12,7 @@ create table property (
   bedrooms  int,
   bathrooms  int,
   image_url  text, -- text data type is for rlly long string which can happen with image urls which can exceed 255 char
+  sold bool
 );
 
 create table user (
