@@ -4,12 +4,14 @@
 create database empire_living;
 use empire_living;
 
-create table user (
+CREATE TABLE user (
   user_id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(20) NOT NULL UNIQUE,
   email VARCHAR(100) NOT NULL,
-  password VARCHAR(100) NOT NULL
+  password VARCHAR(100) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'user'
 );
+
 
 CREATE TABLE property (
   property_id INT AUTO_INCREMENT PRIMARY KEY,
