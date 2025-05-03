@@ -1,7 +1,7 @@
 <?php
-    session_start();
-    $conn = mysqli_connect("localhost", "root", "", "empire_living");
-    $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bedrooms, bathrooms, location, image FROM property");
+session_start();
+$conn = mysqli_connect("localhost", "root", "", "empire_living");
+$result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bedrooms, bathrooms, location, image FROM property");
 ?>
 
 <html lang="en">
@@ -38,8 +38,10 @@
 
         /* Intro box thing */
         .browse_intro {
-            margin: 0; /* remove unexpected margin */
-            padding: 100px 20px 30px; /* top padding to push below header */
+            margin: 0;
+            /* remove unexpected margin */
+            padding: 100px 20px 30px;
+            /* top padding to push below header */
             text-align: center;
             color: #1D2731;
             font-family: "Playfair Display", serif;
@@ -122,26 +124,29 @@
         <h1>Explore Premium Listings</h1>
         <p>Find your dream space among the finest properties New York has to offer.</p>
     </section>
-    
+
     <!-- Properties to view -->
     <div class="preview_properties">
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-            <div class="property" id="<?php echo $row['property_id']?>">
-                <img class="property_img" src="data:image/jpeg;base64,<?php echo base64_encode($row['image']); ?>"
-                    alt="Property Image">
-                <div class="property_text">
-                    <h3><?php echo $row['title'];?></h3>
-                    <p><?php echo $row['location'];?></p>
-                    <p>$<?php echo number_format($row['cost']); ?></p>
-                    <p>
-                        <?php echo $row['bedrooms'];?> Bed • 
-                        <?php echo $row['bathrooms'];?> Bath •
-                        <?php echo $row['square_feet'];?> sqft
-                    </p>
+            <a href="buy.php?id=<?php echo $row['property_id']; ?>" style="text-decoration: none;">
+                <div class="property">
+                    <img class="property_img" src="data:image/jpeg;base64,<?php echo base64_encode($row['image']); ?>"
+                        alt="Property Image">
+                    <div class="property_text">
+                        <h3><?php echo $row['title']; ?></h3>
+                        <p><?php echo $row['location']; ?></p>
+                        <p>$<?php echo number_format($row['cost']); ?></p>
+                        <p>
+                            <?php echo $row['bedrooms']; ?> Bed •
+                            <?php echo $row['bathrooms']; ?> Bath •
+                            <?php echo $row['square_feet']; ?> sqft
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
         <?php endwhile; ?>
     </div>
+
 
 </body>
 

@@ -20,7 +20,7 @@ if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) &&
 
     // Get the user ID 
     $username = $_SESSION['username'];
-    $user_id_result = mysqli_query($conn, "SELECT user_id FROM user WHERE username = '$username'");
+    $user_id_result = mysqli_query($link, "SELECT user_id FROM user WHERE username = '$username'");
 
     if ($row = mysqli_fetch_assoc($user_id_result)) {
         $user_id = $row['user_id'];
@@ -28,10 +28,10 @@ if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) &&
         // Insert the property since we also found the user id
         $sql = "INSERT INTO property (title, user_id, cost, square_feet, bedrooms, bathrooms, image, location, description) VALUES ('$title', '$user_id', '$price', '$sqft', '$bed', '$bath', '$pic', '$location', '$description')";
 
-        mysqli_query($conn, $sql);
+        mysqli_query($link, $sql);
     }
 
-    mysqli_close($conn);
+    mysqli_close($link);
     header("Location: browse.php");
     exit();
 }
