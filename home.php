@@ -52,7 +52,7 @@
         <p>
             At Empire Living, we redefine luxury living in the heart of New York City.  
             Discover premium residences that offer elegance, sophistication, and a true sense of home.
-            <br><br>Explore a selection of our properties that define true luxury.
+            <br><br>Preview some of our newest properties
         </p>
     </section>
 
