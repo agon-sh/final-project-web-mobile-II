@@ -228,5 +228,5 @@
         </div>
     </section>
 </body>
-
 </html>
+<!--Made by: Dion Hajrullahu. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
