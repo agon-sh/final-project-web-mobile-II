@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <div class="property" onclick="location.href='#home'">
+        <!-- <div class="property" onclick="location.href='#home'">
             <img src="images/properties/riverside_condo.png" class="property_img">
             <div class="property_text">
                 <h3>Riverside Condo</h3>
@@ -116,7 +116,7 @@
                 <p class="price">$4,400,000</p>
                 <p class="details">3 Bed • 2 Bath • 2100 sqft</p>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- The "why choose us" section -->
