@@ -1,8 +1,4 @@
-<?php
 
-$conn = mysqli_connect("localhost", "root", "", "empire_living");
-$result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathrooms, image_url FROM property");
-?>
 
 <html lang="en">
 <head>
@@ -228,7 +224,12 @@ header .side_buttons a:hover {
     </header>
 
 <div class="properties-container">
-    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+<?php
+
+$conn = mysqli_connect("localhost", "root", "", "empire_living");
+$result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathrooms, image_url FROM property");
+
+     while ($row = mysqli_fetch_assoc($result)): ?>
         <div class="property-card">
             <img src="data:image/jpeg;base64,<?php echo base64_encode($row['image_url']); ?>" alt="Property Image">
             <br><div class="property-info">
