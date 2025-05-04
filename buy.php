@@ -15,7 +15,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$property_id = $_GET['id'];
+$property_id = intval($_GET['id']);
 $property_result = mysqli_query($conn, "SELECT * FROM property WHERE property_id = $property_id");
 $property = mysqli_fetch_assoc($property_result);
 
@@ -37,7 +37,7 @@ if ($property['user_id'] == $user_id) {
 $agents_result = mysqli_query($conn, "SELECT * FROM agent");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $agent_id = $_POST['agent_id'];
+    $agent_id = intval($_POST['agent_id']);
     $date = $_POST['appointment_date'];
     $time = $_POST['appointment_time'];
 
@@ -50,65 +50,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 include('header.php');
 ?>
-
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Empire Living | Book Appointment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empire Living | Book Viewing</title>
     <link rel="icon" href="images/EmpireLivingLogo-Transparent.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #F3F0F1;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            /* Background image details */
+            background-image: url('images/bg_booking.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
-        .book-container {
-            max-width: 1000px;
-            margin: 120px auto 40px auto; /* top, right, bottom, left */
-            display: flex;
-            gap: 40px;
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-
-        .left {
-            width: 50%;
-        }
-
-        .left img {
-            width: 100%;
+        .container {
+            margin-top: 100px;
+            background-color: #F3F0F1;
+            padding: 20px;
             border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .property-details {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        .left h2 {
-            font-family: "Playfair Display", serif;
-            font-size: 28px;
-            color: #1D2731;
-            margin-bottom: 10px;
-        }
-
-        .left p {
-            font-size: 16px;
-            color: #3C4A57;
-            margin-bottom: 6px;
-        }
-
-        .right {
-            width: 50%;
+        .property-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
         label {
@@ -128,7 +124,7 @@ include('header.php');
             font-size: 16px;
         }
 
-        button {
+        .submit-btn {
             width: 100%;
             padding: 12px;
             background-color: rgb(10, 3, 58);
@@ -140,50 +136,54 @@ include('header.php');
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .submit-btn:hover {
             background-color: #004d99;
         }
     </style>
 </head>
 
 <body>
-    <div class="book-container">
-        <div class="left">
-            <img src="data:image/jpeg;base64,<?php echo base64_encode($property['image']); ?>" alt="Property Image">
-            <h2><?php echo htmlspecialchars($property['title']); ?></h2>
-            <p><strong>Location:</strong> <?php echo htmlspecialchars($property['location']); ?></p>
-            <p><strong>Price:</strong> $<?php echo number_format($property['cost']); ?></p>
-            <p><strong>Size:</strong> <?php echo $property['square_feet']; ?> sqft</p>
-            <p><strong>Bedrooms:</strong> <?php echo $property['bedrooms']; ?></p>
-            <p><strong>Bathrooms:</strong> <?php echo $property['bathrooms']; ?></p>
-            <p><strong>Description:</strong><br><?php echo nl2br(htmlspecialchars($property['description'])); ?></p>
+    <form action="buy.php?id=<?php echo $property_id; ?>" method="post" class="container">
+        <!-- 1) Property Image -->
+        <?php if ($property['image']): ?>
+            <?php $imgData = base64_encode($property['image']); ?>
+            <div class="property-image" style="width:100%; margin-bottom:16px;">
+                <img src="data:image/jpeg;base64,<?php echo $imgData; ?>" alt="Property Image"
+                    style="width:100%; height:auto; border-radius:8px;">
+            </div>
+        <?php endif; ?>
+
+        <!-- 2) All Property Details -->
+        <div class="property-details" style="text-align:left; margin-bottom:16px; line-height:1.4;">
+            <p style="margin:4px 0;"><strong>Title:</strong> <?php echo $property['title']; ?></p>
+            <p style="margin:4px 0;"><strong>Location:</strong> <?php echo $property['location']; ?></p>
+            <p style="margin:4px 0;"><strong>Cost:</strong> $<?php echo number_format($property['cost']); ?></p>
+            <p style="margin:4px 0;"><strong>Square Feet:</strong> <?php echo $property['square_feet']; ?> sq ft</p>
+            <p style="margin:4px 0;"><strong>Bedrooms:</strong> <?php echo $property['bedrooms']; ?></p>
+            <p style="margin:4px 0;"><strong>Bathrooms:</strong> <?php echo $property['bathrooms']; ?></p>
+            <p style="margin:4px 0;"><strong>Description:</strong><br><?php echo $property['description']; ?>
+            </p>
         </div>
 
-        <div class="right">
-            <form method="POST">
-                <label for="agent_id">Select Agent</label>
-                
-                <select name="agent_id" required>
-                    <option value="">--</option>
-                    <?php while ($agent = mysqli_fetch_assoc($agents_result)) : ?>
-                        <option value="<?php echo $agent['agent_id']; ?>">
-                            <?php echo $agent['first_name'] . ' ' . $agent['last_name']; ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
+        <!-- 3) Booking Fields -->
+        <label for="appointment_date">Preferred Date</label>
+        <input type="date" id="appointment_date" name="appointment_date" required style="margin-bottom:12px;">
 
-                <!-- date selector. Minimum date is today's date -->
-                <label for="appointment_date">Appointment Date</label>
-                <input type="date" name="appointment_date" min="<?php echo date('Y-m-d'); ?>" required>
+        <label for="appointment_time">Preferred Time</label>
+        <input type="time" min="09:00" max="17:00" id="appointment_time" name="appointment_time" required style="margin-bottom:12px;">
 
-                <!-- time selector. Time range is from 9-5 -->
-                <label for="appointment_time">Appointment Time</label>
-                <input type="time" name="appointment_time" min="09:00" max="17:00" required>
+        <label for="agent_id">Select Agent</label>
+        <select id="agent_id" name="agent_id" required style="margin-bottom:16px;">
+            <option value="">-- Choose an Agent --</option>
+            <?php while ($agent = mysqli_fetch_assoc($agents_result)): ?>
+                <option value="<?php echo $agent['agent_id']; ?>">
+                    <?php echo $agent['first_name'] . ' ' . $agent['last_name']; ?>
+                </option>
+            <?php endwhile; ?>
+        </select>
 
-                <button type="submit">Book Appointment</button>
-            </form>
-        </div>
-    </div>
+        <!-- 4) Submit Button -->
+        <button type="submit" class="submit-btn" style="padding:10px 0;">Book Appointment</button>
+    </form>
 </body>
-
 </html>

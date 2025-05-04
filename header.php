@@ -3,7 +3,7 @@
             color: white;
             background-color: black;
             font-size: 24px;
-            position: fixed;
+            position: absolute;
             width: 100%;
             height: 50px;
             display: flex;
@@ -12,7 +12,6 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 600;
             z-index: 10;
-
         }
 
         header .logo {
