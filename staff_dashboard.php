@@ -91,3 +91,4 @@ $result = mysqli_query($conn, "SELECT property_id, title, location, cost FROM pr
 </table>
 </body>
 </html>
+<!--Made by: Dion Hajrullahu. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
