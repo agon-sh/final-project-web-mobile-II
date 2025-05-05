@@ -17,6 +17,7 @@
 
 <body>
     <!-- Header Section -->
+    <!-- Not using incldue cuz this one is transparent unlike the header file. DONT TOUCH THIS -->
     <header id="home">
         <div class="logo">
             <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
@@ -58,7 +59,7 @@
 
     <!-- Property Cards -->
     <div class="preview_properties">
-        <div class="property" onclick="location.href='#home'">
+        <div class="property" onclick="location.href='buy.php?id=1'">
             <img src="images/properties/luxury_penthouse.png" class="property_img">
             <div class="property_text">
                 <h3>Luxury Penthouse</h3>
@@ -68,7 +69,7 @@
             </div>
         </div>
 
-        <div class="property" onclick="location.href='#home'">
+        <div class="property" onclick="location.href='buy.php?id=2'">
             <img src="images/properties/modern_loft.png" class="property_img">
             <div class="property_text">
                 <h3>Modern Loft</h3>
