@@ -65,9 +65,12 @@
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
+                // so if the user isn't logged in, we allow them to register
             if (!isset($_SESSION['username'])) {
                 echo '<a href="login.php">Register / Sign In</a>';
-            } else {
+            } 
+                // if theyre already logged in they instead go to their profile
+            else {
                 echo '<a href="profile.php">Profile</a>';
             }
         ?>
