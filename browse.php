@@ -1,7 +1,7 @@
 <?php
-
+session_start();
 $conn = mysqli_connect("localhost", "root", "", "empire_living");
-$result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathrooms, image_url FROM property");
+$result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bedrooms, bathrooms, location, image FROM property");
 ?>
 
 <html lang="en">
@@ -116,36 +116,37 @@ $result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathro
     </style>
 
 <body>
+    <!-- Header -->
+    <?php include('header.php'); ?>
 
-    <header id="home">
-        <div class="logo">
-            <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
-            EMPIRE LIVING
-        </div>
-        <div class="side_buttons">
-            <a href="#">Home</a>
-            <a href="#">Rent</a>
-            <a href="sell.php">Sell</a>
-            <a href="#">Register / Sign In</a>
-        </div>
-    </header>
+    <!-- Intro Box -->
+    <section class="browse_intro">
+        <h1>Explore Premium Listings</h1>
+        <p>Find your dream space among the finest properties New York has to offer.</p>
+    </section>
 
-<div class="properties-container">
-    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-        <div class="property-card">
-            <img src="data:image/jpeg;base64,<?php echo base64_encode($row['image_url']); ?>" alt="Property Image">
-            <br><div class="property-info">
-                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
-                <p><strong>Price:</strong> $<?php echo number_format($row['cost']); ?></p>
-                <p><strong>Size:</strong> <?php echo $row['square_feet']; ?> sqft</p>
-                <p><strong>Bedrooms:</strong> <?php echo $row['bedrooms']; ?></p>
-                <p><strong>Bathrooms:</strong> <?php echo $row['bathrooms']; ?></p>
-            </div>
-        </div><br>
+    <!-- Properties to view -->
+    <div class="preview_properties">
+        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <a href="buy.php?id=<?php echo $row['property_id']; ?>" style="text-decoration: none;">
+                <div class="property">
+                    <img class="property_img" src="data:image/jpeg;base64,<?php echo base64_encode($row['image']); ?>"
+                        alt="Property Image">
+                    <div class="property_text">
+                        <h3><?php echo $row['title']; ?></h3>
+                        <p><?php echo $row['location']; ?></p>
+                        <p>$<?php echo number_format($row['cost']); ?></p>
+                        <p>
+                            <?php echo $row['bedrooms']; ?> Bed •
+                            <?php echo $row['bathrooms']; ?> Bath •
+                            <?php echo $row['square_feet']; ?> sqft
+                        </p>
+                    </div>
+                </div>
+            </a>
+        <?php endwhile; ?>
+    </div>
 
-    <?php endwhile; ?>
-</div>
-<br>
 
 </body>
 
