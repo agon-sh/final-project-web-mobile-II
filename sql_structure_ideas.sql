@@ -21,7 +21,7 @@ CREATE TABLE property (
   bedrooms INT NOT NULL,
   bathrooms INT NOT NULL,
   image LONGBLOB,
-  location VARCHAR(50) NOT NULL, -- like the name of the neighborhood)
+  location VARCHAR(50) NOT NULL, -- like the name of the neighborhood
   address VARCHAR(255) NOT NULL, -- full address for details page
   sold BOOLEAN DEFAULT FALSE,
   description TEXT,
