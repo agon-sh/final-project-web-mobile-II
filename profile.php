@@ -13,8 +13,9 @@ $conn = mysqli_connect('localhost', 'root', '', 'empire_living')
 
 // Fetch user info
 $username = $_SESSION['username'];
-$res = mysqli_query($conn, "SELECT user_id, email FROM user WHERE username='$username'");
+$res = mysqli_query($conn, "SELECT user_id, email, role FROM user WHERE username='$username'");
 $user = mysqli_fetch_assoc($res);
+$role = $user["role"];
 $user_id = $user['user_id'];
 
 // Delete property
@@ -183,7 +184,13 @@ $all = mysqli_query($conn, "SELECT * FROM property WHERE user_id=$user_id");
     <div class="container">
         <h2>Hello, <?php echo $username; ?>!</h2>
         <p><strong>Email:</strong> <?php echo $user['email']; ?></p><br>
-        <h3><a href="logout.php">Logout</a></h3>
+        <h3><a href="logout.php">Logout</a></h3><br>
+        <?php
+        if ($role === 'staff') {
+            echo '<h3><a href="staff_dashboard.php">ADMIN DASHBOARD</a></h3>';
+        }
+        ?>
+
     </div>
 
     <?php if ($edit): ?>
@@ -222,12 +229,14 @@ $all = mysqli_query($conn, "SELECT * FROM property WHERE user_id=$user_id");
                     <td><?php echo $row['cost']; ?></td>
                     <td>
                         <a href="profile.php?edit_id=<?php echo $row['property_id']; ?>">Edit</a>
-                        <a href="profile.php?delete_id=<?php echo $row['property_id']; ?>" onclick="return confirm('Delete?')">Delete</a>
+                        <a href="profile.php?delete_id=<?php echo $row['property_id']; ?>"
+                            onclick="return confirm('Delete?')">Delete</a>
                     </td>
                 </tr>
             <?php endwhile; ?>
         </table>
     </div>
 </body>
+
 </html>
 <!-- This code was fully created  by Agon Shehu, and not by any ai services like chatgpt -->
