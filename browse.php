@@ -127,7 +127,36 @@ $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bed
 
     <!-- Properties to view -->
     <div class="preview_properties">
+
+        <!-- Default Property 1 -->
+        <a href="buy.php?id=1" style="text-decoration: none;">
+            <div class="property">
+                <img class="property_img" src="images/properties/luxury_penthouse.png" alt="Property Image">
+                <div class="property_text">
+                    <h3>Luxury Penthouse</h3>
+                    <p>Upper East Side</p>
+                    <p>$5,500,000</p>
+                    <p>3 Bed • 3 Bath • 2800 sqft</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Default Property 2 -->
+        <a href="buy.php?id=2" style="text-decoration: none;">
+            <div class="property">
+                <img class="property_img" src="images/properties/modern_loft.png" alt="Property Image">
+                <div class="property_text">
+                    <h3>Modern Loft</h3>
+                    <p>SoHo</p>
+                    <p>$3,200,000</p>
+                    <p>2 Bed • 2 Bath • 1800 sqft</p>
+                </div>
+            </div>
+        </a>
+
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <!-- Added default property cards for defualt properties. so we dont wanna duplicate those 2 and will skip them. -->
+            <?php if ($row['property_id'] <= 2) continue; ?>
             <a href="buy.php?id=<?php echo $row['property_id']; ?>" style="text-decoration: none;">
                 <div class="property">
                     <img class="property_img" src="data:image/jpeg;base64,<?php echo base64_encode($row['image']); ?>"
