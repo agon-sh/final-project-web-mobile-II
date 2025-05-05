@@ -51,3 +51,6 @@ create table appointment (
 INSERT INTO agent (email, first_name, last_name) VALUES ('john.smith@empire-living.com', 'John', 'Smith');
 INSERT INTO agent (email, first_name, last_name) VALUES ('frederick.jefferson@empire-living.com', 'Frederick', 'Jefferson');
 INSERT INTO agent (email, first_name, last_name) VALUES ('annabelle.smalls@empire-living.com', 'Annabelle', 'Smalls');
+
+-- Creating staff roles
+insert into user (username, email, password, role) VALUES ('admin', 'admin@admin.com', 'admin', 'staff');
