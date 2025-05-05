@@ -55,4 +55,14 @@ INSERT INTO agent (email, first_name, last_name) VALUES ('annabelle.smalls@empir
 -- Creating staff roles
 insert into user (username, email, password, role) VALUES ('admin', 'admin@admin.com', 'admin', 'staff');
 
+-- Creating some users
+insert into user (username, email, password) VALUES ('agon_shehu', 'agon_shehu@gmail.com', 'agon_shehu');
+insert into user (username, email, password) VALUES ('agon_surdulli', 'agon_surdulli@gmail.com', 'agon_surdulli');
+insert into user (username, email, password) VALUES ('dion_hajrullahu', 'dion_hajrullahu@gmail.com', 'dion_hajrullahu');
+insert into user (username, email, password) VALUES ('erin_kupina', 'erin_kupina@gmail.com', 'erin_kupina');
+
+-- Creating default properties available for purchase immediately
+insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location, address) VALUES (-1, 'Luxury Penthouse', 5500000, 3, 3, 'Upper East Side')
+insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location, address) VALUES (-1, 'Modern Loft', 3200000, 2, 2, 'SoHo')
+
 -- SQL Database Made by AGON SHEHU. I declare no AI or other similar services was used to create this database.
