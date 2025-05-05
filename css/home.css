@@ -76,7 +76,6 @@ header .side_buttons a:hover {
 }
 
 /* Background Image */
-
 .bg_image {
     width: 100%;
     height: 625px;
@@ -119,7 +118,6 @@ header .side_buttons a:hover {
 }
 
 /* Intro Section */
-
 .intro_text {
     text-align: center;
     padding: 50px 20px;
@@ -139,10 +137,46 @@ header .side_buttons a:hover {
     font-size: 18px;
 }
 
+/* Services Section */
+#services, .services {
+    padding: 60px 20px;
+    background-color: #fafafa;
+    text-align: center;
+}
+
+.services h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #1D2731;
+}
+
+.services_grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.service {
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.service h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #1D2731;
+    font-family: "Montserrat", sans-serif;
+}
+
+.service p {
+    font-size: 16px;
+    color: #555;
+}
+
 /* Property Cards */
-
-/* Preview properties */
-
 .preview_properties {
     display: flex;
     flex-wrap: wrap;
@@ -194,8 +228,45 @@ header .side_buttons a:hover {
     font-size: 16px;
 }
 
-/* why choose us section */
+/* Testimonials Section */
+#testimonials, .testimonials {
+    padding: 60px 20px;
+    background-color: #fff;
+    text-align: center;
+}
 
+.testimonials h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #1D2731;
+}
+
+.testimonial_cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    max-width: 300px;
+    font-style: italic;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.testimonial .author {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-style: normal;
+    color: #1D2731;
+}
+
+/* Why Choose Us Section */
 .why_choose_us {
     padding: 80px 20px;
     text-align: center;
@@ -236,4 +307,40 @@ header .side_buttons a:hover {
     font-family: "Poppins", sans-serif;
     font-size: 16px;
     color: #3C4A57;
+}
+
+/* Contact CTA Section */
+.contact_cta {
+    padding: 80px 20px;
+    background-color: #1D2731;
+    color: #fff;
+    text-align: center;
+}
+
+.contact_cta h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.contact_cta p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact_cta .btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #e6b91e;
+    color: #1D2731;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.contact_cta .btn:hover {
+    background-color: #d4a918;
 }

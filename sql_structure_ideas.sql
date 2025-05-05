@@ -62,7 +62,7 @@ insert into user (username, email, password) VALUES ('agon_surdulli', 'agon_surd
 insert into user (username, email, password) VALUES ('dion_hajrullahu', 'dion_hajrullahu@gmail.com', 'dion_hajrullahu');
 insert into user (username, email, password) VALUES ('erin_kupina', 'erin_kupina@gmail.com', 'erin_kupina');
 
--- Creating default properties available for purchase immediately
+-- Creating default properties available for purchase for testing purposes.
 insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location) VALUES (1, 'Luxury Penthouse', 5500000, 2800, 3, 3, 'Upper East Side');
 insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location) VALUES (1, 'Modern Loft', 3200000, 1800, 2, 2, 'SoHo');
 
