@@ -9,19 +9,19 @@ create table user (
   username VARCHAR(20) NOT NULL UNIQUE,
   email VARCHAR(100) NOT NULL,
   password VARCHAR(100) NOT NULL,
-  role varchar(10) NOT NULL DEFAULT 'user'
+  role varchar(10) NOT NULL DEFAULT 'user' -- basically used to identify who's  staff or not
 );
 
 CREATE TABLE property (
   property_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL, -- who posted it
+  user_id INT NOT NULL, -- who posted the property
   title VARCHAR(30) NOT NULL,
   cost INT NOT NULL,
   square_feet INT NOT NULL,
   bedrooms INT NOT NULL,
   bathrooms INT NOT NULL,
   image LONGBLOB,
-  location VARCHAR(50) NOT NULL, -- short label (like neighborhood)
+  location VARCHAR(50) NOT NULL, -- like the name of the neighborhood)
   address VARCHAR(255) NOT NULL, -- full address for details page
   sold BOOLEAN DEFAULT FALSE,
   description TEXT,
@@ -57,10 +57,10 @@ insert into user (username, email, password, role) VALUES ('admin', 'admin@admin
 
 -- Creating some users
 insert into user (username, email, password) VALUES ('test', 'test@test.com', 'test');
-insert into user (username, email, password) VALUES ('agon_shehu', 'agon_shehu@gmail.com', 'agon_shehu');
-insert into user (username, email, password) VALUES ('agon_surdulli', 'agon_surdulli@gmail.com', 'agon_surdulli');
-insert into user (username, email, password) VALUES ('dion_hajrullahu', 'dion_hajrullahu@gmail.com', 'dion_hajrullahu');
-insert into user (username, email, password) VALUES ('erin_kupina', 'erin_kupina@gmail.com', 'erin_kupina');
+insert into user (username, email, password) VALUES ('agon_shehu', 'agon_shehu@empire-living.com', 'agon_shehu');
+insert into user (username, email, password) VALUES ('agon_surdulli', 'agon_surdulli@empire-living.com', 'agon_surdulli');
+insert into user (username, email, password) VALUES ('dion_hajrullahu', 'dion_hajrullahu@empire-living.com', 'dion_hajrullahu');
+insert into user (username, email, password) VALUES ('erin_kupina', 'erin_kupina@empire-living.com', 'erin_kupina');
 
 -- Creating default properties available for purchase for testing purposes.
 insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location) VALUES (1, 'Luxury Penthouse', 5500000, 2800, 3, 3, 'Upper East Side');
