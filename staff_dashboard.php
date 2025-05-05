@@ -22,6 +22,7 @@ if (isset($_GET['delete_id'])) {
 // Update property
 if (isset($_POST['update'])) {
     $id           = intval($_POST['property_id']);
+    $user_id      = intval($_POST['user_id']);
     $title        = $_POST['title'];
     $location     = $_POST['location'];
     $address      = $_POST['address'];
@@ -32,6 +33,7 @@ if (isset($_POST['update'])) {
     $description  = $_POST['description'];
 
     $sql = "UPDATE property SET
+        user_id = $user_id,
         title = '$title',
         location = '$location',
         address = '$address',
@@ -55,7 +57,7 @@ if (isset($_GET['edit_id'])) {
 }
 
 // Fetch all properties
-$all = mysqli_query($conn, "SELECT property_id, title, location, cost FROM property");
+$all = mysqli_query($conn, "SELECT property_id, user_id, title, location, cost FROM property");
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +77,7 @@ $all = mysqli_query($conn, "SELECT property_id, title, location, cost FROM prope
         <h3>Edit Property #<?php echo $edit['property_id']; ?></h3>
         <form method="post">
             <input type="hidden" name="property_id" value="<?php echo $edit['property_id']; ?>">
+            <p>User ID: <input type="number" name="user_id" value="<?php echo $edit['user_id']; ?>"></p>
             <p>Title: <input type="text" name="title" value="<?php echo $edit['title']; ?>"></p>
             <p>Location: <input type="text" name="location" value="<?php echo $edit['location']; ?>"></p>
             <p>Address: <input type="text" name="address" value="<?php echo $edit['address']; ?>"></p>
@@ -96,6 +99,7 @@ $all = mysqli_query($conn, "SELECT property_id, title, location, cost FROM prope
     <table>
         <tr>
             <th>ID</th>
+            <th>User ID</th>
             <th>Title</th>
             <th>Location</th>
             <th>Cost</th>
@@ -104,6 +108,7 @@ $all = mysqli_query($conn, "SELECT property_id, title, location, cost FROM prope
         <?php while ($row = mysqli_fetch_assoc($all)): ?>
         <tr>
             <td><?php echo $row['property_id']; ?></td>
+            <td><?php echo $row['user_id']; ?></td>
             <td><?php echo $row['title']; ?></td>
             <td><?php echo $row['location']; ?></td>
             <td><?php echo $row['cost']; ?></td>
@@ -116,5 +121,4 @@ $all = mysqli_query($conn, "SELECT property_id, title, location, cost FROM prope
     </table>
 </body>
 </html>
-
 <!--Made by: Dion Hajrullahu. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->

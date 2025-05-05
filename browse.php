@@ -1,11 +1,9 @@
 <?php
-
 $conn = mysqli_connect("localhost", "root", "", "empire_living");
-$result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathrooms, image_url FROM property");
+$result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathrooms, image FROM property");
 ?>
 
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,7 +131,7 @@ $result = mysqli_query($conn, "SELECT title, cost, square_feet, bedrooms, bathro
 <div class="properties-container">
     <?php while ($row = mysqli_fetch_assoc($result)): ?>
         <div class="property-card">
-            <img src="data:image/jpeg;base64,<?php echo base64_encode($row['image_url']); ?>" alt="Property Image">
+            <img src="data:image/jpeg;base64,<?php echo base64_encode($row['image']); ?>" alt="Property Image">
             <br><div class="property-info">
                 <h3><?php echo htmlspecialchars($row['title']); ?></h3>
                 <p><strong>Price:</strong> $<?php echo number_format($row['cost']); ?></p>

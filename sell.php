@@ -190,7 +190,7 @@ if (isset ($_POST['title'])&&isset ($_POST['price'])&&isset ($_POST['sqft']) &&i
     $bed = $_POST['bedrooms'];
     $bath = $_POST['bathrooms'];
     $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
-    $sql = "INSERT INTO property(title, cost, square_feet, bedrooms, bathrooms, image_url) VALUE ('$title','$price','$sqft','$bed','$bath','$pic')";
+    $sql = "INSERT INTO property(title, cost, square_feet, bedrooms, bathrooms, image) VALUE ('$title','$price','$sqft','$bed','$bath','$pic')";
     mysqli_query($link, $sql);
     mysqli_close($link);
     header("Location: browse.php");
