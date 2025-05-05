@@ -18,7 +18,6 @@ session_start();
           family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +35,6 @@ session_start();
             background-color: white;
         }
 
-        /* Header */
         header {
             color: white;
             background-color: transparent;
@@ -88,14 +86,12 @@ session_start();
             color: black;
         }
 
-        /* Quotes (Playfair Display) */
         .quote {
             font-family: "Playfair Display", serif;
             font-weight: 400;
             font-style: normal;
         }
 
-        /* Background Image */
         .bg_image {
             width: 100%;
             height: 625px;
@@ -137,7 +133,6 @@ session_start();
             padding: 10px 20px;
         }
 
-        /* Intro Section */
         .intro_text {
             text-align: center;
             padding: 50px 20px;
@@ -157,7 +152,6 @@ session_start();
             font-size: 18px;
         }
 
-        /* Services Section */
         #services,
         .services {
             padding: 60px 20px;
@@ -197,7 +191,6 @@ session_start();
             color: #555;
         }
 
-        /* Property Cards */
         .preview_properties {
             display: flex;
             flex-wrap: wrap;
@@ -207,7 +200,6 @@ session_start();
             padding: 20px;
         }
 
-        /* ensure the heading sits above the cards */
         .preview_properties h2 {
             flex-basis: 100%;
             width: 100%;
@@ -260,15 +252,14 @@ session_start();
             font-size: 16px;
         }
 
-        /* Testimonials Section */
-        #testimonials,
-        .testimonials {
+        #reviews,
+        .reviews {
             padding: 60px 20px;
             background-color: #fff;
             text-align: center;
         }
 
-        .testimonials h2 {
+        .reviews h2 {
             font-family: "Playfair Display", serif;
             font-size: 36px;
             margin-bottom: 30px;
@@ -299,7 +290,6 @@ session_start();
             color: #1D2731;
         }
 
-        /* Why Choose Us Section */
         .why_choose_us {
             padding: 80px 20px;
             text-align: center;
@@ -355,6 +345,7 @@ session_start();
             <a href="home.php">Home</a>
             <a href="browse.php">Rent</a>
             <a href="sell.php">Sell</a>
+<!--             Changes the header if user is logged in to redirect to profile -->
             <?php if (!isset($_SESSION['username'])): ?>
                 <a href="login.php">Register / Sign In</a>
             <?php else: ?>
@@ -363,7 +354,7 @@ session_start();
         </div>
     </header>
 
-    <!-- Hero Background -->
+<!--     main backgorund image -->
     <div class="bg_image">
         <img src="images/buildings_background.jfif" alt="City skyline">
         <div class="bg_image_text">DISCOVER YOUR EMPIRE.</div>
@@ -420,8 +411,8 @@ session_start();
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
+    <!-- client reviews section -->
+    <section id="reviews" class="reviews">
         <h2>What Our Clients Say</h2>
         <div class="testimonial_cards">
             <div class="testimonial">
