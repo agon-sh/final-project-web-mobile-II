@@ -233,8 +233,7 @@ $all = mysqli_query($conn, "SELECT * FROM property WHERE user_id=$user_id");
                     <td><?php echo $row['cost']; ?></td>
                     <td>
                         <a href="profile.php?edit_id=<?php echo $row['property_id']; ?>">Edit</a>
-                        <a href="profile.php?delete_id=<?php echo $row['property_id']; ?>"
-                            onclick="return confirm('Delete?')">Delete</a>
+                        <a href="profile.php?delete_id=<?php echo $row['property_id']; ?>" onclick="return confirm('Delete?')">Delete</a>
                     </td>
                 </tr>
             <?php endwhile; ?>
