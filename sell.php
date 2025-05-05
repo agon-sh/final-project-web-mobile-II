@@ -1,13 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) { //check if the session is set
     // Not logged in
     header("Location: login.php");
     exit();
 }
 
-$link = mysqli_connect("localhost", "root", "", "empire_living");
-
+$link = mysqli_connect("localhost", "root", "", "empire_living"); // connecting with db
+//checking if all of these are set
 if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) && isset($_POST['bedrooms']) && isset($_POST['bathrooms']) && isset($_POST['location']) && isset($_POST['description']) && isset($_FILES["pic"])) {
     $title = $_POST['title'];
     $price = $_POST['price'];
@@ -16,7 +16,7 @@ if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) &&
     $bath = $_POST['bathrooms'];
     $location = $_POST['location'];
     $description = $_POST['description'];
-    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
+    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"])); //makes it possible to save a file in db
 
     // Get the user ID 
     $username = $_SESSION['username'];
@@ -25,7 +25,7 @@ if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) &&
     if ($row = mysqli_fetch_assoc($user_id_result)) {
         $user_id = $row['user_id'];
 
-        // Insert the property since we also found the user id
+        // Insert the property from that user that you are logged in as 
         $sql = "INSERT INTO property (title, user_id, cost, square_feet, bedrooms, bathrooms, image, location, description) VALUES ('$title', '$user_id', '$price', '$sqft', '$bed', '$bath', '$pic', '$location', '$description')";
 
         mysqli_query($link, $sql);
