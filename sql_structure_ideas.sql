@@ -66,4 +66,4 @@ insert into user (username, email, password) VALUES ('erin_kupina', 'erin_kupina
 insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location) VALUES (1, 'Luxury Penthouse', 5500000, 2800, 3, 3, 'Upper East Side');
 insert into property (user_id, title, cost, square_feet, bedrooms, bathrooms, location) VALUES (1, 'Modern Loft', 3200000, 1800, 2, 2, 'SoHo');
 
--- SQL Database Made by AGON SHEHU. I declare no AI or other similar services was used to create this database.
+-- SQL Database Made by Agon Shehu, Erin Kupina and Dion Hajrullahu I declare no AI or other similar services was used to create this database.
