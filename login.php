@@ -1,3 +1,77 @@
+ <?php
+    session_start();
+
+    // Checking if the user is already logged in.
+    if (isset($_SESSION['username'])) {
+        // Determine redirect based on role if logged in
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'staff') {
+            header("Location: staff_dashboard.php");
+        } else {
+            header("Location: home.php");
+        }
+        exit();
+    }
+
+    // Database connection
+    $conn = mysqli_connect("localhost", "root", "", "empire_living");
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $error = "";
+
+    // Remember me
+    if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+        $username = $_COOKIE['username'];
+        $password = $_COOKIE['password'];
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        // Fetching password and role using prepared statement for sql injection protection
+        $stmt = mysqli_prepare($conn, "SELECT password, role FROM user WHERE username = ?");
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) === 1) {
+            $row = mysqli_fetch_assoc($result);
+            $dbPassword = $row['password'];
+            $userRole = $row['role']; // Geting the role
+
+            if ($password === $dbPassword) {
+                $_SESSION["username"] = $username;
+                $_SESSION["role"] = $userRole; // Storing role in session
+
+                if (isset($_POST['remember_me'])) {
+                    setcookie("username", $username, time() + (86400 * 30), "/");
+                    setcookie("password", $password, time() + (86400 * 30), "/");
+                }
+
+                // Redirect based on role
+                if ($userRole === 'staff') {
+                    header("Location: staff_dashboard.php");
+                } else {
+                    header("Location: home.php");
+                }
+                exit();
+            } else {
+                $error = "Incorrect password.";
+            }
+        } else {
+            $error = "User not found.";
+        }
+        mysqli_stmt_close($stmt); // Closing the prepared statement
+        mysqli_close($conn); // Closing the database connection
+    }
+
+    // Including the header file
+    include('header.php');
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,81 +196,6 @@
 </head>
 
 <body>
-    <?php
-    // Starting or resuming the session
-    session_start();
-
-    // Checking if the user is already logged in.
-    if (isset($_SESSION['username'])) {
-        // Determine redirect based on role
-        if (isset($_SESSION['role']) && $_SESSION['role'] === 'staff') {
-            header("Location: staff_dashboard.php");
-        } else {
-            header("Location: home.php");
-        }
-        exit();
-    }
-
-    // Database connection
-    $conn = mysqli_connect("localhost", "root", "", "empire_living");
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    $error = "";
-
-    // Remember me
-    if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
-        $username = $_COOKIE['username'];
-        $password = $_COOKIE['password'];
-    }
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-
-        // Fetching password and role using prepared statement for sql injection protection
-        $stmt = mysqli_prepare($conn, "SELECT password, role FROM user WHERE username = ?");
-        mysqli_stmt_bind_param($stmt, "s", $username);
-        mysqli_stmt_execute(statement: $stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($result) === 1) {
-            $row = mysqli_fetch_assoc($result);
-            $dbPassword = $row['password'];
-            $userRole = $row['role']; // Get the role
-
-            if ($password === $dbPassword) {
-                $_SESSION["username"] = $username;
-                $_SESSION["role"] = $userRole; // Storing role in session
-
-                if (isset($_POST['remember_me'])) {
-                    setcookie("username", $username, time() + (86400 * 30), "/");
-                    setcookie("password", $password, time() + (86400 * 30), "/"); // Insecure
-                }
-
-                // Redirect based on role
-                if ($userRole === 'staff') {
-                    header("Location: staff_dashboard.php");
-                } else {
-                    header("Location: home.php");
-                }
-                exit();
-            } else {
-                $error = "Incorrect password.";
-            }
-        } else {
-            $error = "User not found.";
-        }
-        mysqli_stmt_close($stmt); // Closing the prepared statement
-        mysqli_close($conn); // Closing the database connection
-    }
-
-    // Including the header file after session start and potential redirects
-    include('header.php');
-    ?>
-
     <section class="login-section">
         <div class="container">
             <h2>Login</h2>
