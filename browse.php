@@ -175,8 +175,6 @@ $result = mysqli_query($conn, "SELECT property_id, title, cost, square_feet, bed
             </a>
         <?php endwhile; ?>
     </div>
-
-
 </body>
-
 </html>
+<!--Made by: Erin Kupina. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
