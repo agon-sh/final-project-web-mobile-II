@@ -151,39 +151,18 @@ include('header.php');
     </style>
 </head>
 
-<?php 
-session_start();
-if (!isset($_SESSION['username'])) {
-    // Not logged in
-    header("Location: login.php");
-    exit();
-}
-$link = mysqli_connect("localhost", "root", "", "empire_living");
-if (isset ($_POST['title'])&&isset ($_POST['price'])&&isset ($_POST['sqft']) &&isset ($_POST['bedrooms']) &&isset ($_POST['bathrooms'])&&isset($_FILES["pic"])){
-    $title = $_POST['title'];
-    $price = $_POST['price'];
-    $sqft = $_POST['sqft'];
-    $bed = $_POST['bedrooms'];
-    $bath = $_POST['bathrooms'];
-    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
-    $sql = "INSERT INTO property(title, cost, square_feet, bedrooms, bathrooms, image_url) VALUE ('$title','$price','$sqft','$bed','$bath','$pic')";
-    mysqli_query($link, $sql);
-    mysqli_close($link);
-    header("Location: browse.php");
-}
-?>
-
-
-<form action="sell.php" method="post" enctype="multipart/form-data" class='container'>
-    <h2>Your property</h2>
-<input type="text" name="title" placeholder="Your propert's title" required><br>
-<input type="number" name="price" placeholder= "The price of your property" required><br>
-<input type="number" name="sqft" placeholder="Size of your property(in sq feet)" required><br>
-<input type="number" name="bedrooms" placeholder="Numbers of bedrooms" required><br>
-<input type="number" name="bathrooms" placeholder="Numbers of bathrooms" required><br>
-<input type="file" name="pic" required  ><br>
-<input type="submit" class="submit">
-
+<form action="sell.php" method="post" enctype="multipart/form-data" class="container">
+    <h2>Sell Your Property</h2>
+    <input type="text" name="title" placeholder="Your property's title" required><br>
+    <input type="number" name="price" placeholder="The price of your property" required><br>
+    <input type="number" name="sqft" placeholder="Size of your property (in sq feet)" required><br>
+    <input type="number" name="bedrooms" placeholder="Number of bedrooms" required><br>
+    <input type="number" name="bathrooms" placeholder="Number of bathrooms" required><br>
+    <input type="text" name="location" placeholder="Location (e.g., SoHo, Upper East Side)" required><br>
+    <textarea name="description" placeholder="Describe your property" rows="4" cols="50"
+        maxlength="255"></textarea><br><br>
+    <input type="file" name="pic" required><br>
+    <input type="submit" class="submit"><br>
 </form>
 
 </body>
