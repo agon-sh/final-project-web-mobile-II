@@ -10,25 +10,29 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// if id not provided return to browsing
 if (!isset($_GET['id'])) {
     header("Location: browse.php");
     exit();
 }
 
-$property_id = intval($_GET['id']);
+$property_id = $_GET['id'];
 $property_result = mysqli_query($conn, "SELECT * FROM property WHERE property_id = $property_id");
 $property = mysqli_fetch_assoc($property_result);
 
+// if this property id isnt in the database then we return to the browsing
 if (!$property) {
     header("Location: browse.php");
     exit();
 }
 
+//  get info about user from session & sql
 $username = $_SESSION['username'];
 $user_result = mysqli_query($conn, "SELECT user_id FROM user WHERE username = '$username'");
 $user = mysqli_fetch_assoc($user_result);
 $user_id = $user['user_id'];
 
+// prevents user from booking their own property
 if ($property['user_id'] == $user_id) {
     header("Location: browse.php");
     exit();
@@ -41,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST['appointment_date'];
     $time = $_POST['appointment_time'];
 
-    $insert = "INSERT INTO appointment (user_id, property_id, agent_id, appointment_date, appointment_time) 
-               VALUES ('$user_id', '$property_id', '$agent_id', '$date', '$time')";
+    // updates and creates an appointment in the database
+    $insert = "INSERT INTO appointment (user_id, property_id, agent_id, appointment_date, appointment_time) VALUES ('$user_id', '$property_id', '$agent_id', '$date', '$time')";
     mysqli_query($conn, $insert);
     header("Location: home.php");
     exit();
@@ -71,7 +75,7 @@ include('header.php');
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            /* Background image details */
+
             background-image: url('images/bg_booking.png');
             background-size: cover;
             background-position: center;
@@ -144,7 +148,7 @@ include('header.php');
 
 <body>
     <form action="buy.php?id=<?php echo $property_id; ?>" method="post" class="container">
-        <!-- 1) Property Image -->
+        <!-- Property's Image -->
         <?php if ($property['image']): ?>
             <?php $imgData = base64_encode($property['image']); ?>
             <div class="property-image" style="width:100%; margin-bottom:16px;">
@@ -153,7 +157,7 @@ include('header.php');
             </div>
         <?php endif; ?>
 
-        <!-- 2) All Property Details -->
+        <!-- All Property Details -->
         <div class="property-details" style="text-align:left; margin-bottom:16px; line-height:1.4;">
             <p style="margin:4px 0;"><strong>Title:</strong> <?php echo $property['title']; ?></p>
             <p style="margin:4px 0;"><strong>Location:</strong> <?php echo $property['location']; ?></p>
@@ -165,7 +169,7 @@ include('header.php');
             </p>
         </div>
 
-        <!-- 3) Booking Fields -->
+        <!-- Booking Fields -->
         <label for="appointment_date">Preferred Date</label>
         <input type="date" id="appointment_date" name="appointment_date" required style="margin-bottom:12px;">
 
@@ -182,9 +186,9 @@ include('header.php');
             <?php endwhile; ?>
         </select>
 
-        <!-- 4) Submit Button -->
+        <!--  Submit Button -->
         <button type="submit" class="submit-btn" style="padding:10px 0;">Book Appointment</button>
     </form>
 </body>
 </html>
-<!-- Made by Agon Surdulli, I declare no AI or other similar services was used to make my code -->
+<!-- Made by Agon Surdulli, i declare no ai services was used to make my code -->
