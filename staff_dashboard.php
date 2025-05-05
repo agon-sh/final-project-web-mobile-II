@@ -60,7 +60,7 @@ if (isset($_POST['update'])) {
     exit;
 }
 
-// Fetch edit record if requested
+// gets specific property record if requested to edit
 $edit = null;
 if (isset($_GET['edit_id'])) {
     $e = $_GET['edit_id'];
@@ -68,7 +68,7 @@ if (isset($_GET['edit_id'])) {
     $edit = mysqli_fetch_assoc($res);
 }
 
-// Fetch all properties
+// gets all properties
 $all = mysqli_query($conn, "SELECT property_id, user_id, title, location, cost FROM property");
 ?>
 
@@ -151,6 +151,7 @@ $all = mysqli_query($conn, "SELECT property_id, user_id, title, location, cost F
 
     <h2>Staff Dashboard</h2>
 
+<!--     shows the edit form ONLY if the edit GET variable exists. $edit is not null if so -->
     <?php if ($edit): ?>
         <h3>Edit Property #<?php echo $edit['property_id']; ?></h3>
         <form method="post">
@@ -173,6 +174,7 @@ $all = mysqli_query($conn, "SELECT property_id, user_id, title, location, cost F
         </form>
     <?php endif; ?>
 
+<!--     displays every property in the db -->
     <h3>All Properties</h3>
     <table>
         <tr>
