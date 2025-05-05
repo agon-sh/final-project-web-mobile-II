@@ -373,8 +373,8 @@ session_start();
     <section id="about" class="intro_text">
         <h2>About Empire Living</h2>
         <p>
-            At Empire Living, we redefine luxury living in the heart of New York City.<br>
-            Discover premium residences that offer elegance, sophistication, and a true sense of home.
+            At Empire Living, we redefine luxury living in New York City.<br>
+            Discover properties that offer beauty, luxury, and a sense of home!
         </p>
     </section>
 
@@ -388,7 +388,7 @@ session_start();
             </div>
             <div class="service">
                 <h3>Selling</h3>
-                <p>Our expert agents get you top dollar, fast and stress-free.</p>
+                <p>Showcase and sell your property to interested buyers.</p>
             </div>
             <div class="service">
                 <h3>Property Management</h3>
@@ -445,18 +445,15 @@ session_start();
         <div class="reasons_grid">
             <div class="reason">
                 <h3>Luxury Properties</h3>
-                <p>We specialize in the most exclusive homes and residences in New York City, offering elegance,
-                    sophistication, and modern living.</p>
+                <p>We deal with the most exclusive homes and residences in New York City, offering beauty and modern living.</p>
             </div>
             <div class="reason">
                 <h3>Expert Agents</h3>
-                <p>Our experienced real estate professionals provide personalized guidance and exceptional service
-                    tailored to your unique needs.</p>
+                <p>Our experienced professionals provide great service to all of your needs.</p>
             </div>
             <div class="reason">
                 <h3>Unmatched Locations</h3>
-                <p>From Upper East Side penthouses to SoHo lofts, we connect you with properties in the most desirable
-                    neighborhoods in Manhattan.</p>
+                <p>From Upper East Side penthouses to SoHo lofts, we connect you with properties in the best neighborhoods in Manhattan.</p>
             </div>
         </div>
     </section>
