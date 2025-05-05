@@ -358,7 +358,7 @@ session_start();
             <?php if (!isset($_SESSION['username'])): ?>
                 <a href="login.php">Register / Sign In</a>
             <?php else: ?>
-                <a href="logout.php">Logout</a>
+                <a href="profile.php">Profile</a>
             <?php endif; ?>
         </div>
     </header>
