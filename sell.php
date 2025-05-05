@@ -1,3 +1,43 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    // Not logged in
+    header("Location: login.php");
+    exit();
+}
+
+$link = mysqli_connect("localhost", "root", "", "empire_living");
+
+if (isset($_POST['title']) && isset($_POST['price']) && isset($_POST['sqft']) && isset($_POST['bedrooms']) && isset($_POST['bathrooms']) && isset($_POST['location']) && isset($_POST['description']) && isset($_FILES["pic"])) {
+    $title = $_POST['title'];
+    $price = $_POST['price'];
+    $sqft = $_POST['sqft'];
+    $bed = $_POST['bedrooms'];
+    $bath = $_POST['bathrooms'];
+    $location = $_POST['location'];
+    $description = $_POST['description'];
+    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
+
+    // Get the user ID 
+    $username = $_SESSION['username'];
+    $user_id_result = mysqli_query($link, "SELECT user_id FROM user WHERE username = '$username'");
+
+    if ($row = mysqli_fetch_assoc($user_id_result)) {
+        $user_id = $row['user_id'];
+
+        // Insert the property since we also found the user id
+        $sql = "INSERT INTO property (title, user_id, cost, square_feet, bedrooms, bathrooms, image, location, description) VALUES ('$title', '$user_id', '$price', '$sqft', '$bed', '$bath', '$pic', '$location', '$description')";
+
+        mysqli_query($link, $sql);
+    }
+
+    mysqli_close($link);
+    header("Location: browse.php");
+    exit();
+}
+
+include('header.php');
+?>
 
 <html lang="en">
 
@@ -7,37 +47,25 @@
     <link rel="icon" href="images/EmpireLivingLogo-Transparent.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<title>Empire Estate Sign Up</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Empire Living | Sign Up</title>
 
-<header id="home">
-    <div class="logo">
-        <img src="images/EmpireLivingLogo-TransparentWhite.png" alt="Empire Living Logo">
-        EMPIRE LIVING
-    </div>
-    <div class="side_buttons">
-        <a href="home.html">Home</a>
-        <a href="#">Rent</a>
-        <a href="sell.php">Sell</a>
-      
-        <a href="logout.php">Logout</a>
-    </div>
-</header> 
- 
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', sans-serif;
-        height: 100vh;
-        display: flex;
-        background-image:url('bg_sell.jpg');
-        background-size: cover;         /* scales image to fill screen */
-    background-repeat: no-repeat;   /* prevents tiling */
-    background-position: center;    /* centers the image */
-    background-attachment: fixed; 
-        justify-content: center;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            display: flex;
+            background-image: url('images/bg_sell.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            justify-content: center;
+        }
 
 
         .container h2 {
@@ -116,102 +144,27 @@
             background-color: white;
         }
 
-/* Header */
-header {
-    color: white;
-    background-color: black;
-    font-size: 24px;
-    position: absolute; 
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    z-index: 10;
-  
-}
-
-header .logo {
-    display: flex;
-    align-items: center;
-    font-size: 24px;
-    color: white;
-}
-
-header .logo img {
-    height: 40px;
-    width: 40px;
-    margin-right: 10px;
-}
-
-header .side_buttons {
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-
-header .side_buttons a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 0 20px;
-    text-decoration: none;
-    color: white;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-}
-
-header .side_buttons a:hover {
-    background-color: white;
-    color: black;
-}
-.submit:hover{
-    background-color:#0012;
-    cursor:pointer;
-}
-</style>
+        .submit:hover {
+            background-color: #0012;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
-<?php 
-session_start();
-if (!isset($_SESSION['username'])) {
-    // Not logged in
-    header("Location: login.php");
-    exit();
-}
-$link = mysqli_connect("localhost", "root", "", "empire_living");
-if (isset ($_POST['title'])&&isset ($_POST['price'])&&isset ($_POST['sqft']) &&isset ($_POST['bedrooms']) &&isset ($_POST['bathrooms'])&&isset($_FILES["pic"])){
-    $title = $_POST['title'];
-    $price = $_POST['price'];
-    $sqft = $_POST['sqft'];
-    $bed = $_POST['bedrooms'];
-    $bath = $_POST['bathrooms'];
-    $pic = addslashes(file_get_contents($_FILES["pic"]["tmp_name"]));
-    $sql = "INSERT INTO property(title, cost, square_feet, bedrooms, bathrooms, image_url) VALUE ('$title','$price','$sqft','$bed','$bath','$pic')";
-    mysqli_query($link, $sql);
-    mysqli_close($link);
-    header("Location: browse.php");
-}
-?>
-
-
-<form action="sell.php" method="post" enctype="multipart/form-data" class='container'>
-    <h2>Your property</h2>
-<input type="text" name="title" placeholder="Your propert's title" required><br>
-<input type="number" name="price" placeholder= "The price of your property" required><br>
-<input type="number" name="sqft" placeholder="Size of your property(in sq feet)" required><br>
-<input type="number" name="bedrooms" placeholder="Numbers of bedrooms" required><br>
-<input type="number" name="bathrooms" placeholder="Numbers of bathrooms" required><br>
-<input type="file" name="pic" required  ><br>
-<input type="submit" class="submit">
-
+<form action="sell.php" method="post" enctype="multipart/form-data" class="container">
+    <h2>Sell Your Property</h2>
+    <input type="text" name="title" placeholder="Your property's title" required><br>
+    <input type="number" name="price" placeholder="The price of your property" required><br>
+    <input type="number" name="sqft" placeholder="Size of your property (in sq feet)" required><br>
+    <input type="number" name="bedrooms" placeholder="Number of bedrooms" required><br>
+    <input type="number" name="bathrooms" placeholder="Number of bathrooms" required><br>
+    <input type="text" name="location" placeholder="Location (e.g., SoHo, Upper East Side)" required><br>
+    <textarea name="description" placeholder="Describe your property" rows="4" cols="50"
+        maxlength="255"></textarea><br><br>
+    <input type="file" name="pic" required><br>
+    <input type="submit" class="submit"><br>
 </form>
+
 </body>
-
-
-
 
 <!--Made by: Erin Kupina. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
