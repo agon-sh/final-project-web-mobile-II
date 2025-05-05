@@ -54,3 +54,5 @@ INSERT INTO agent (email, first_name, last_name) VALUES ('annabelle.smalls@empir
 
 -- Creating staff roles
 insert into user (username, email, password, role) VALUES ('admin', 'admin@admin.com', 'admin', 'staff');
+
+-- SQL Database Made by AGON SHEHU. I declare no AI or other similar services was used to create this database.
