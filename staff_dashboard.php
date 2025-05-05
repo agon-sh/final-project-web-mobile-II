@@ -1,94 +1,120 @@
+<?php
+session_start();
+
+// Only staff can access
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'staff') {
+    header('Location: login.php');
+    exit;
+}
+
+// Connect to DB
+$conn = mysqli_connect('localhost', 'root', '', 'empire_living')
+    or die('Connection error');
+
+// Delete property
+if (isset($_GET['delete_id'])) {
+    $del = intval($_GET['delete_id']);
+    mysqli_query($conn, "DELETE FROM property WHERE property_id = $del");
+    header('Location: staff_dashboard.php');
+    exit;
+}
+
+// Update property
+if (isset($_POST['update'])) {
+    $id           = intval($_POST['property_id']);
+    $title        = $_POST['title'];
+    $location     = $_POST['location'];
+    $address      = $_POST['address'];
+    $cost         = intval($_POST['cost']);
+    $sqft         = intval($_POST['square_feet']);
+    $bedrooms     = intval($_POST['bedrooms']);
+    $bathrooms    = intval($_POST['bathrooms']);
+    $description  = $_POST['description'];
+
+    $sql = "UPDATE property SET
+        title = '$title',
+        location = '$location',
+        address = '$address',
+        cost = $cost,
+        square_feet = $sqft,
+        bedrooms = $bedrooms,
+        bathrooms = $bathrooms,
+        description = '$description'
+      WHERE property_id = $id";
+    mysqli_query($conn, $sql);
+    header('Location: staff_dashboard.php');
+    exit;
+}
+
+// Fetch edit record if requested
+$edit = null;
+if (isset($_GET['edit_id'])) {
+    $e = intval($_GET['edit_id']);
+    $res = mysqli_query($conn, "SELECT * FROM property WHERE property_id = $e");
+    $edit = mysqli_fetch_assoc($res);
+}
+
+// Fetch all properties
+$all = mysqli_query($conn, "SELECT property_id, title, location, cost FROM property");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #f9f9f9;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f0f0f0;
-        }
-
-        a.button {
-            color: white;
-            background-color: #c0392b;
-            padding: 6px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        a.button:hover {
-            background-color: #e74c3c;
-        }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     </style>
 </head>
 <body>
-<?php
-session_start();
+    <h2>Staff Dashboard</h2>
 
-// Check if the user is a staff member
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'staff') {
-    header("Location: login.php");
-    exit();
-}
+    <?php if ($edit): ?>
+        <h3>Edit Property #<?php echo $edit['property_id']; ?></h3>
+        <form method="post">
+            <input type="hidden" name="property_id" value="<?php echo $edit['property_id']; ?>">
+            <p>Title: <input type="text" name="title" value="<?php echo $edit['title']; ?>"></p>
+            <p>Location: <input type="text" name="location" value="<?php echo $edit['location']; ?>"></p>
+            <p>Address: <input type="text" name="address" value="<?php echo $edit['address']; ?>"></p>
+            <p>Cost: <input type="number" name="cost" value="<?php echo $edit['cost']; ?>"></p>
+            <p>Square Feet: <input type="number" name="square_feet" value="<?php echo $edit['square_feet']; ?>"></p>
+            <p>Bedrooms: <input type="number" name="bedrooms" value="<?php echo $edit['bedrooms']; ?>"></p>
+            <p>Bathrooms: <input type="number" name="bathrooms" value="<?php echo $edit['bathrooms']; ?>"></p>
+            <p>Description:<br>
+               <textarea name="description"><?php echo $edit['description']; ?></textarea>
+            </p>
+            <p>
+                <input type="submit" name="update" value="Update">
+                <a href="staff_dashboard.php">Cancel</a>
+            </p>
+        </form>
+    <?php endif; ?>
 
-$conn = mysqli_connect("localhost", "root", "", "empire_living");
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-// Optional: Handle delete request
-if (isset($_GET['delete_id'])) {
-    $delete_id = intval($_GET['delete_id']);
-    mysqli_query($conn, "DELETE FROM property WHERE property_id = $delete_id");
-    header("Location: staff_dashboard.php");
-    exit();
-}
-
-// Get all properties
-$result = mysqli_query($conn, "SELECT property_id, title, location, cost FROM property");
-?>
-    <h2>Welcome, Staff Member</h2>
-<p>Below is a list of all properties in the system:</p>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Location</th>
-        <th>Cost</th>
-        <th>Action</th>
-    </tr>
-
-    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+    <h3>All Properties</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Cost</th>
+            <th>Actions</th>
+        </tr>
+        <?php while ($row = mysqli_fetch_assoc($all)): ?>
         <tr>
             <td><?php echo $row['property_id']; ?></td>
-            <td><?php echo htmlspecialchars($row['title']); ?></td>
-            <td><?php echo htmlspecialchars($row['location']); ?></td>
-            <td>$<?php echo number_format($row['cost']); ?></td>
-            <td><a class="button" href="staff_dashboard.php?delete_id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a></td>
+            <td><?php echo $row['title']; ?></td>
+            <td><?php echo $row['location']; ?></td>
+            <td><?php echo $row['cost']; ?></td>
+            <td>
+                <a href="?edit_id=<?php echo $row['property_id']; ?>">Edit</a> |
+                <a href="?delete_id=<?php echo $row['property_id']; ?>" onclick="return confirm('Delete?')">Delete</a>
+            </td>
         </tr>
-    <?php endwhile; ?>
-</table>
+        <?php endwhile; ?>
+    </table>
 </body>
 </html>
+
 <!--Made by: Dion Hajrullahu. I declare that this code is written by me and not by ai or any other software service mentioned in the guidelines.-->
