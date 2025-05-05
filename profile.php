@@ -181,6 +181,8 @@ $all = mysqli_query($conn, "SELECT * FROM property WHERE user_id=$user_id");
 
 <body>
     <?php include('header.php'); ?>
+
+<!--     the pain part which greets user and lets them logout -->
     <div class="container">
         <h2>Hello, <?php echo $username; ?>!</h2>
         <p><strong>Email:</strong> <?php echo $user['email']; ?></p><br>
@@ -193,6 +195,7 @@ $all = mysqli_query($conn, "SELECT * FROM property WHERE user_id=$user_id");
 
     </div>
 
+<!--     only shows if the edit get variable exists, basically allows input to change property info -->
     <?php if ($edit): ?>
         <div class="container">
             <h3>Edit Property #<?php echo $edit['property_id']; ?></h3>
@@ -211,6 +214,7 @@ $all = mysqli_query($conn, "SELECT * FROM property WHERE user_id=$user_id");
         </div>
     <?php endif; ?>
 
+<!--     a table of all properties under logged in user's ID -->
     <div class="container">
         <h2>My Properties</h2>
         <table>
