@@ -1,3 +1,52 @@
+ <?php
+        if (!isset($_SESSION['username'])) {
+            // If User is already logged in we log out
+            session_start();
+            session_destroy();
+        }
+
+        session_start();
+        // Connecting to the database
+        $conn = mysqli_connect("localhost", "root", "", "empire_living");
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $username = $_POST["username"];
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+            // Checking if username already exists
+            $check_username = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
+            if (mysqli_num_rows($check_username) > 0) {
+                $error = "Username already taken.";
+            } 
+            else {
+                // Checking if email already exists
+                $check_email = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
+                if (mysqli_num_rows($check_email) > 0) {
+                    $error = "Email already registered.";
+                } 
+                else {
+                    // Creating the new user
+                    mysqli_query($conn, "INSERT INTO user (username, email, password) VALUES ('$username', '$email', '$password')");
+
+                    $_SESSION["username"] = $username;
+                    //checking if the user want to be remembered
+                    if (isset($_POST['remember_me'])) {
+                        setcookie("username", $username, time() + (86400 * 30));
+                        setcookie("password", $password, time() + (86400 * 30));
+                    }
+
+                    header("Location: home.php");
+                    exit();
+                }
+            }
+
+            mysqli_close($conn);
+        }
+
+        include('header.php')
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,54 +148,6 @@
 </head>
 
 <body>
-    <?php
-        if (!isset($_SESSION['username'])) {
-            // User's already logged in, so we log user out
-            session_start();
-            session_destroy();
-        }
-
-        session_start();
-        $conn = mysqli_connect("localhost", "root", "", "empire_living");
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $username = $_POST["username"];
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-
-            // Check if username already exists
-            $check_username = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
-            if (mysqli_num_rows($check_username) > 0) {
-                $error = "Username already taken.";
-            } 
-            else {
-                // Check if email already exists
-                $check_email = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
-                if (mysqli_num_rows($check_email) > 0) {
-                    $error = "Email already registered.";
-                } 
-                else {
-                    // Create new user
-                    mysqli_query($conn, "INSERT INTO user (username, email, password) VALUES ('$username', '$email', '$password')");
-
-                    $_SESSION["username"] = $username;
-
-                    if (isset($_POST['remember_me'])) {
-                        setcookie("username", $username, time() + (86400 * 30), "/");
-                        setcookie("password", $password, time() + (86400 * 30), "/");
-                    }
-
-                    header("Location: home.php");
-                    exit();
-                }
-            }
-
-            mysqli_close($conn);
-        }
-
-        include('header.php')
-    ?>
-
     <section class="signup-section">
         <div class="container">
             <h2>Sign Up</h2>
